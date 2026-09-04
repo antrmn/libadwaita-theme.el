@@ -469,3 +469,7 @@
 (provide-theme 'libadwaita)
 (provide 'libadwaita-theme)
 ;;; libadwaita-theme.el ends here
+
+;; Local Variables:
+;; read-symbol-shorthands: (("la/" . "libadwaita-"))
+;; End:
