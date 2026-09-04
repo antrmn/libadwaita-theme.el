@@ -224,8 +224,9 @@
     (ansi-white . "#CFCFCF")
     (ansi-yellow . "#A2734C")))
 
-(defvar abcz-light '((background light)))
-(defvar abcz-dark '((background dark)))
+(defvar la/light '((background light)))
+(defvar la/dark '((background dark)))
+
 
 (let-alist libadwaita-colors
   (custom-theme-set-faces
