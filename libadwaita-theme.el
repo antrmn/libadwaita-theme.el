@@ -25,6 +25,87 @@
 ;; https://developer.gnome.org/hig/reference/palette.html
 ;; https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/css-variables.html
 
+(defvar la/-faces nil)
+
+(defmacro la/defface (face spec &optional doc)
+  ""
+  (declare (doc-string 3)(indent defun))
+  `(let ((spec-fun (lambda () (face-spec-set ',face ,spec))))
+     (funcall spec-fun)
+     (set-face-documentation ',face ,doc)
+     (setf (alist-get ',face la/-faces) spec-fun)
+     ',face))
+
+(defun la/refresh-accent-faces ()
+  (pcase-dolist (`(,_face . ,spec-fun) la/-faces)
+    (funcall spec-fun)))
+
+(defcustom la/accent-color 'blue
+  ""
+  :type '(choice (const :tag "Blue" blue)
+                 (const :tag "Teal" teal)
+                 (const :tag "Green" green)
+                 (const :tag "Yellow" yellow)
+                 (const :tag "Orange" orange)
+                 (const :tag "Red" red)
+                 (const :tag "Pink" pink)
+                 (const :tag "Purple" purple)
+                 (const :tag "Slate" slate))
+  :set (lambda (sym value)
+         (set-default sym value)
+         (la/refresh-accent-faces))
+  :local nil)
+
+(defvar la/accent-bg-colors
+  '((blue   . "#3584e4")
+    (teal   . "#2190a4")
+    (green  . "#3a944a")
+    (yellow . "#c88800")
+    (orange . "#ed5b00")
+    (red    . "#e62d42")
+    (pink   . "#d56199")
+    (purple . "#9141ac")
+    (slate  . "#6f8396"))
+  "")
+
+(defvar la/light-accent-fg-colors
+  '((blue   . "#0461be")
+    (teal   . "#007184")
+    (green  . "#15772e")
+    (yellow . "#905300")
+    (orange . "#b62200")
+    (red    . "#c00023")
+    (pink   . "#a2326c")
+    (purple . "#8939a4")
+    (slate  . "#526678"))
+  "")
+
+(defvar la/dark-accent-fg-colors
+  '((blue   . "#81d0ff")
+    (teal   . "#7bdff4")
+    (green  . "#8de698")
+    (yellow . "#ffc057")
+    (orange . "#ff9c5b")
+    (red    . "#ff888c")
+    (pink   . "#ffa0d8")
+    (purple . "#fba7ff")
+    (slate  . "#bbd1e5"))
+  "")
+
+(defun la/accent-bg-color ()
+  (alist-get la/accent-color la/accent-bg-colors
+             "#3584e4"))
+
+(defalias 'la/accent-color #'la/accent-bg-color)
+
+(defun la/light-accent-fg-color ()
+  (alist-get la/accent-color la/light-accent-fg-colors
+             "#0461be"))
+
+(defun la/dark-accent-fg-color ()
+  (alist-get la/accent-color la/dark-accent-fg-colors
+             "#81d0ff"))
+
 (defconst libadwaita-colors
   '(
     (blue-1 . "#99C1F1")
