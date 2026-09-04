@@ -2,6 +2,20 @@
 (deftheme libadwaita
   "Created 2024-12-20.")
 
+(defun la/mix (color1 color2 alpha)
+  ;; Maybe rounding error
+  (let* ((color1 (color-name-to-rgb color1))
+         (color2 (color-name-to-rgb color2))
+         (result (color-blend color1 color2 alpha)))
+    (pcase-let ((`(,r ,g ,b) result))
+      (color-rgb-to-hex r g b 2))))
+
+(defun la/darken (color alpha)
+  (la/mix color "#000000" (- 1 alpha)))
+
+(defun la/brighten (color alpha)
+  (la/mix color "#ffffff" (- 1 alpha)))
+
 ;; Colors are shamelessly copied from here
 ;; https://gitlab.gnome.org/GNOME/gtksourceview/-/raw/master/data/styles/Adwaita-dark.xml?ref_type=heads
 ;; https://gitlab.gnome.org/GNOME/gtksourceview/-/blob/master/data/styles/Adwaita.xml?ref_type=heads
