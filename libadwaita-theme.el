@@ -229,6 +229,28 @@
 
 
 (let-alist libadwaita-colors
+  (la/defface la/accent-background
+    `((,la/light
+       :background ,(la/mix (la/accent-bg-color) .view-bg-light 0.30))
+      (,la/dark
+       :background ,(la/mix (la/accent-bg-color) .view-bg-dark 0.30))))
+  
+  (la/defface la/accent-ui-underline
+    `((t
+       :underline (:color ,(la/accent-color) :position t))))
+  
+  (la/defface la/accent-foreground
+    `((,la/light
+       :foreground ,(la/light-accent-fg-color))
+      (,la/dark
+       :foreground ,(la/dark-accent-fg-color))))
+  
+  (la/defface la/accent-wavy-underline
+    `((,la/light
+       :underline (:color ,(la/light-accent-fg-color) :style wave))
+      (,la/dark
+       :underline (:color ,(la/dark-accent-fg-color) :style wave))))
+  
   (custom-theme-set-faces
    'libadwaita
     
