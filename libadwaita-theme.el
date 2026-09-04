@@ -253,228 +253,518 @@
   
   (custom-theme-set-faces
    'libadwaita
-    
-   ;;ANSI
-   `(ansi-color-black
-     ((t :background ,.ansi-black :foreground ,.ansi-black)))
-   `(ansi-color-blue
-     ((t (:background ,.ansi-blue :foreground ,.ansi-blue))))
-   `(ansi-color-bright-black
-     ((t (:background ,.ansi-bright-black :foreground ,.ansi-bright-black))))
-   `(ansi-color-bright-blue
-     ((t (:background ,.ansi-bright-blue :foreground ,.ansi-bright-blue))))
-   `(ansi-color-bright-cyan
-     ((t (:background ,.ansi-bright-cyan :foreground ,.ansi-bright-cyan))))
-   `(ansi-color-bright-green
-     ((t (:background ,.ansi-bright-green :foreground ,.ansi-bright-green))))
-   `(ansi-color-bright-magenta
-     ((t (:background ,.ansi-bright-magenta :foreground ,.ansi-bright-magenta))))
-   `(ansi-color-bright-red
-     )
-   `(ansi-color-bright-yellow
-     ((t (:background ,.ansi-bright-yellow :foreground ,.ansi-bright-yellow))))
-   `(ansi-color-cyan
-     ((t (:background ,.ansi-cyan :foreground ,.ansi-cyan))))
-   `(ansi-color-green
-     ((t (:background ,.ansi-green :foreground ,.ansi-green))))
-   `(ansi-color-magenta
-     ((t (:background ,.ansi-magenta :foreground ,.ansi-magenta))))
-   `(ansi-color-red
-     ((t (:background ,.ansi-red :foreground ,.ansi-red))))
-   `(ansi-color-white
-     ((t (:background ,.ansi-white :foreground ,.ansi-white))))
-   `(ansi-color-yellow
-     ((t (:background ,.ansi-yellow :foreground ,.ansi-yellow))))
-   `(compilation-mode-line-fail
-     ((t (:inherit compilation-error :weight bold))))
    `(default
-     ((,abcz-light :background ,.light-1 :foreground ,.shade-3)
-      (,abcz-dark  :background ,.libadwaita-dark :foreground ,.light-5)))
+     ((,la/light
+       :background ,.view-bg-light
+       :foreground ,.view-fg-light)
+      (,la/dark
+       :background ,.view-bg-dark
+       :foreground ,.view-fg-dark)))
+   `(window-divider
+     ((,la/light
+       :foreground ,(la/mix .view-fg-light .view-bg-light 0.15))
+      (,la/dark
+       :foreground ,(la/mix .view-fg-dark .view-bg-dark 0.15))))
+   `(window-divider-last-pixel
+     ((,la/light
+       :foreground ,.window-bg-light)
+      (,la/dark
+       :foreground ,.window-bg-dark)))
+   `(window-divider-first-pixel
+     ((t
+       :inherit window-divider-last-pixel)))
    `(fringe
-     ((,abcz-light :background "#F6F5F4")
-      (,abcz-dark :background "#353535"))) 
-   
-   `(margin ;; Must be same as scrollbar in size and color
-     ((t :inherit fringe)))
-   `(cursor
-     ((,abcz-light :background ,.shade-1)
-      (,abcz-dark :background ,.light-5)))
-   `(diff-added
-     ((,abcz-light :foreground ,.teal-4)
-      (,abcz-dark :foreground ,.teal-3)))
-   `(diff-changed
-     ((,abcz-light :foreground ,.orange-4)
-      (,abcz-dark :foreground ,.orange-3)))
-   `(diff-removed
-     ((t (:foreground ,.red-1))))
-   `(diff-error
-     ((t (:inherit error))))
-   `(diff-file-header
-     ((t (:weight bold))))
-   `(diff-header
-     ((t (:foreground ,.violet-4))))
-   `(diff-hunk-header
-     ((t (:foreground ,.yellow-6))))
-   `(diff-indicator-added
-     ((t (:inherit diff-added))))
-   `(diff-indicator-changed
-     ((t (:inherit diff-changed))))
-   `(diff-indicator-removed
-     ((t (:inherit diff-removed))))
-   `(diff-refine-added
-     ((t (:weight bold))))
-   `(diff-refine-changed
-     ((t (:weight bold))))
-   `(diff-refine-removed
-     ((t (:inherit diff-refine-changed :weight bold))))
-   `(elisp-shorthand-font-lock-face
-     ((t (:inherit font-lock-keyword-face))))
-   `(error
-     ((t (:foreground ,.red-4 :weight bold))))
-   `(flymake-error
-     ((t (:underline (:color ,.red-4 :style wave :position nil)))))
-   `(flymake-warning
-     ((t (:underline (:color ,.yellow-4 :style wave :position nil)))))
-   `(flymake-note
-     ((t (:underline (:color ,.blue-3 :style wave :position nil)))))
-   `(flymake-note-echo
-     ((t :foreground ,.blue-3 :weight bold)))
-   `(flymake-note-echo-at-eol
-     ((t :inherit (flymake-end-of-line-diagnostics-face flymake-note-echo))))
-   `(flymake-note-fringe
-     ((t :inherit flymake-note-echo)))
-   `(match
-     ((,abcz-light :background ,.yellow-2 :distant-foreground ,.shade-4)
-      (,abcz-dark :background "#897827" :distant-foreground ,.dark-5)))
+     ((,la/light
+       :background ,.window-bg-light)
+      (,la/dark
+       :background ,.window-bg-dark)))
+   `(margin
+     ((t
+       :inherit fringe)))
+   `(scroll-bar
+     ((,la/light
+       :background ,.window-bg-light)
+      (,la/dark
+       :background ,.window-bg-dark)))
+   `(mode-line
+     ((,la/light
+       :background ,.headerbar-bg-light
+       :box (:line-width (4 . 4) :style flat-button)
+       :foreground ,.headerbar-fg-light
+       :inherit   variable-pitch
+       :overline ,(la/mix .window-fg-light .window-bg-light 0.15))
+      (,la/dark
+       :background ,.headerbar-bg-dark
+       :box (:line-width (4 . 4) :style flat-button)
+       :foreground ,.headerbar-fg-dark
+       :inherit variable-pitch
+       :overline ,(la/mix .window-fg-dark .window-bg-dark 0.15))))
+   `(mode-line-active
+     ((t
+       :inherit (mode-line la/accent-ui-underline))))
+   `(mode-line-inactive
+     ((,la/light
+       :background ,.headerbar-backdrop-light
+       :foreground ,(la/mix .headerbar-fg-light
+                            .headerbar-backdrop-light 0.55)
+       :inherit mode-line)
+      (,la/dark
+       :background ,.headerbar-backdrop-dark
+       :foreground ,(la/mix .headerbar-fg-dark
+                            .headerbar-backdrop-dark 0.55)
+      :inherit mode-line)))
+   `(mode-line-highlight
+     ((t
+       :foreground ,.light-8))) ;; TODO
+   `(mode-line-buffer-id
+     ((t
+       :weight bold)))
+   `(mode-line-emphasis
+     ((t
+       :weight bold)))
+   `(header-line
+     ((,la/light
+       :background ,.secondary-sidebar-bg-light
+       :box (:line-width (4 . 4) :style flat-button)
+       :foreground ,.secondary-sidebar-fg-light
+       :inherit variable-pitch
+       :underline (:position t :color ,(la/mix .window-fg-light
+                                               .window-bg-light 0.15)))
+      (,la/dark
+       :background ,.secondary-sidebar-bg-dark
+       :box (:line-width (4 . 4) :style flat-button)
+       :foreground ,.secondary-sidebar-fg-dark
+       :inherit variable-pitch
+       :underline (:position t :color ,(la/mix .window-fg-dark
+                                               .window-bg-dark 0.15)))))
+   `(header-line-active
+     ((t
+       :inherit header-line)))
+   `(header-line-inactive
+     ((,la/light
+       :background ,.secondary-sidebar-backdrop-light
+       :foreground ,(la/mix .secondary-sidebar-fg-light
+                            .secondary-sidebar-backdrop-light 0.15)
+       :inherit header-line)
+      (,la/dark
+       :background ,.secondary-sidebar-backdrop-dark
+       :foreground ,(la/mix .secondary-sidebar-fg-dark
+                            .secondary-sidebar-backdrop-dark 0.15)
+       :inherit header-line)))
+   `(header-line-highlight
+     ((t
+       :inherit mode-line-highlight)))
+   `(tab-bar
+     ((,la/light
+       :background ,.window-bg-light
+       :box (:line-width (4 . 4) :style flat-button)
+       :foreground ,.window-fg-light
+       :inherit variable-pitch
+       :underline (:color ,.window-bg-light :position t))
+      (,la/dark
+       :background ,.window-bg-dark
+       :box (:line-width (4 . 4) :style flat-button)
+       :foreground ,.window-fg-dark
+       :inherit variable-pitch
+       :underline (:color ,.window-bg-dark :position t))))
+   `(tab-bar-tab-inactive
+     ((t
+       :inherit (tab-bar))))
+   `(tab-bar-tab
+     ((,la/light
+       :background ,(la/darken .window-bg-light 0.08)
+       :foreground ,.window-fg-light
+       :inherit tab-bar)
+      (,la/dark
+       :background ,(la/brighten .window-bg-dark 0.10)
+       :inherit tab-bar)))
+   `(tab-bar-tab-highlight
+     ((,la/light
+       :background ,(la/darken .window-bg-light 0.12) ;;arbitrary
+       :foreground ,.window-fg-light
+       :inherit tab-bar-tab)
+      (,la/dark
+       :inherit tab-bar-tab
+       :background ,(la/brighten .window-bg-dark 0.15))))
+   `(tab-line
+     ((,la/light
+       :background ,.window-bg-light
+       :box (:line-width (4 . 4) :style flat-button)
+       :foreground ,.window-fg-light
+       :inherit variable-pitch
+       :underline (:position t :color ,(la/mix .window-fg-light
+                                               ;;was 0.15. 0.05 looks good
+                                               .window-bg-light 0.05)))
+      (,la/dark
+       :background ,.window-bg-dark
+       :box (:line-width (4 . 4) :style flat-button)
+       :foreground ,.window-fg-dark
+       :inherit variable-pitch
+       :underline (:color ,(la/mix .window-fg-dark .window-bg-dark 0.05)
+                          :position t))))
+   `(tab-line-inactive
+     ((,la/light
+       :background ,.window-backdrop-light
+       :foreground ,(la/mix .window-fg-light
+                            .window-bg-light
+                            0.55)
+       :inherit tab-line)
+      (,la/dark
+       :background ,.window-backdrop-dark
+       :foreground ,(la/mix .window-fg-dark
+                            .window-bg-dark 0.55)
+       :inherit tab-line)))
+   `(tab-line-tab-current ; Current tab in selected windows
+     ((,la/light
+       :background ,(la/darken .window-bg-light 0.08)
+       :inherit tab-line)
+      (,la/dark
+       :background ,(la/brighten .window-bg-dark 0.10)
+       :inherit tab-line)))
+   `(tab-line-tab  ; Current tab in non-selected (inactive) windows
+     ((,la/light
+       :background ,(la/darken .window-bg-light 0.04)
+       :inherit tab-line-current) ;; Inventato
+      (,la/dark
+      :background ,(la/brighten .window-bg-dark 0.06)
+      :inherit tab-line-current))) ;; Inventato
+   `(tab-line-tab-inactive ; Non-selected tabs in all windows
+     ((t
+       :inherit tab-line-inactive))) ;same as tab-line-inactive.
+   `(tab-line-tab-inactive-alternate
+     ((,la/light
+       :background ,(la/darken .window-bg-light 0.05)
+       :inherit tab-line-tab-inactive) ; by heart
+      (,la/dark
+       :background ,(la/brighten .window-bg-dark 0.05)
+       :inherit tab-line-tab-inactive)))
+   `(tab-line-highlight
+     ((,la/light
+       :background ,(la/darken .window-bg-light 0.10))
+      (,la/dark
+       :background ,(la/brighten .window-bg-dark 0.15))))
+   `(tab-line-tab-modified
+     ((t))) 
    ;;Font-lock
    `(font-lock-builtin-face
-     ((t (:foreground ,.blue-4))))
+     ((t
+       :foreground ,.blue-4)))
    `(font-lock-comment-face
-     ((t (:foreground ,.shade-1))))
+     ((t
+       :foreground ,.shade-1)))
    `(font-lock-constant-face
-     ((,abcz-light (:foreground ,.violet-4))
-      (,abcz-dark (:foreground ,.violet-2))))
+     ((,la/light
+       :foreground ,.violet-4)
+      (,la/dark
+       :foreground ,.violet-2)))
    `(font-lock-function-call-face
-     ((,abcz-light (:foreground ,.blue-4))
-      (,abcz-dark (:foreground ,.blue-2))))
+     ((,la/light
+       :foreground ,.blue-4)  
+      (,la/dark
+       :foreground ,.blue-2)))
    `(font-lock-function-name-face
-     ((t :inherit default)))
+     ((t)))
    `(font-lock-keyword-face
-     ((,abcz-light (:foreground ,.orange-5 :weight bold))
-      (,abcz-dark (:foreground ,.orange-4 :weight bold))))
+     ((,la/light
+       :foreground ,.orange-5 :weight bold)
+      (,la/dark
+       :foreground ,.orange-4 :weight bold)))
    `(font-lock-number-face
-     ((,abcz-light (:foreground ,.violet-4))
-      (,abcz-dark (:foreground ,.violet-2))))
+     ((,la/light
+       :foreground ,.violet-4)
+      (,la/dark
+       :foreground ,.violet-2
+       )))
    `(font-lock-preprocessor-face ;;CHECK
-     ((,.abcz-light (:foreground ,.teal-5))
-      (,.abcz-dark (:foreground ,.teal-3))))
+     ((,la/light
+       :foreground ,.teal-5)
+      (,la/dark
+       :foreground ,.teal-3)))
    `(font-lock-string-face
-     ((,abcz-light (:foreground ,.teal-5))
-      (,abcz-dark (:foreground ,.teal-2))))
+     ((,la/light
+       :foreground ,.teal-5)
+      (,la/dark
+       :foreground ,.teal-2)))
    `(font-lock-type-face
-     ((,abcz-light (:foreground ,.teal-5 :weight bold))
-      (,abcz-dark (:foreground ,.teal-2 :weight bold))))
+     ((,la/light
+       :foreground ,.teal-5 :weight bold)
+      (,la/dark
+       :foreground ,.teal-2 :weight bold)))
    `(font-lock-variable-name-face
-     ((t :inherit 'default)))
-   
+     ((t
+       :inherit 'default)))
    `(highlight
-     ((,abcz-light (:background ,.light-3))
-      (,abcz-dark (:background ,.libadwaita-dark-alt))))
+     ((t
+       :box (:line-width (1 . 1))
+       :weight bold )))
    `(hl-line
-     ((t (:inherit (highlight) :extend t))))
+     ((,la/light
+       :background ,.light-3
+       :extend t)
+      (,la/dark
+       :background ,.libadwaita-dark-alt
+       :extend t)))
    `(isearch
-     ((t (:background ,.blue-3 :foreground ,.light-1))))
+     ((t
+       :background ,.blue-3
+       :foreground ,.light-1)))
    `(lazy-highlight
-     ((t (:background ,.yellow-1 :distant-foreground "black"))))
+     ((t
+       :background ,.yellow-1
+       :distant-foreground "black")))
    `(shadow
-     ((,abcz-light (:foreground ,.light-7))
-      (,abcz-dark (:foreground ,.dark-1))))
+     ((,la/light
+       :foreground ,.light-7)
+      (,la/dark
+       :foreground ,.dark-1)))
    ;; Line-number
    `(line-number
-     ((t (:inherit (shadow default)))))
-   `(line-number-current-line ;;TODO maybe inherit from line-number-major-tick?
-     ((t (:inherit (hl-line line-number) :weight bold))))
+     ((t
+       :inherit (shadow default))))
+   ;;TODO maybe inherit from line-number-major-tick?
+   `(line-number-current-line 
+     ((t
+       :inherit (hl-line line-number)
+       :weight bold)))
    `(line-number-major-tick
-     ((,abcz-light (:foreground ,.shade-1))
-      (,abcz-dark (:foreground ,.light-7))))
+     ((,la/light 
+       :foreground ,.shade-1)
+      (,la/dark
+       :foreground ,.light-7)))
    `(line-number-minor-tick
-     ((,abcz-light (:foreground ,.light-5))
-      (,abcz-dark (:foreground ,.dark-3))))
-   
+     ((,la/light
+       :foreground ,.light-5)
+      (,la/dark
+       :foreground ,.dark-3)))
    `(link
-     ((,abcz-light (:foreground ,.blue-3 :underline t))
-      (,abcz-dark (:foreground ,.blue-2 :underline t))))
-   `(link-visited
-     ((t (:inherit link :foreground ,.purple-4))))
+     ((,la/light
+       :foreground ,.blue-3
+       :underline t)
+      (,la/dark
+       :foreground ,.blue-2
+       :underline t)))
+   `(link-visited ;;color-mix(in srgb, var(--accent-color) 80%, var(--view-fg-color)
+     ((t
+       :inherit link :foreground ,.purple-4)))
    `(minibuffer-prompt
-     ((t (:inherit default :weight bold))))
+     ((t
+       :inherit (la/accent-foreground default)
+       :weight bold)))
+   `(compilation-mode-line-fail
+     ((t
+       :inherit compilation-error
+       :weight bold)))
+   `(cursor
+     ((,la/light
+       :background ,.shade-1)
+      (,la/dark
+       :background ,.light-5)))
+   `(diff-added
+     ((,la/light
+       :foreground ,.teal-4)
+      (,la/dark
+       :foreground ,.teal-3)))
+   `(diff-changed
+     ((,la/light
+       :foreground ,.orange-4)
+      (,la/dark
+       :foreground ,.orange-3)))
+   `(diff-removed
+     ((t 
+       :foreground ,.red-1)))
+   `(diff-error
+     ((t
+       :inherit error)))
+   `(diff-file-header
+     ((t
+       :weight bold)))
+   `(diff-header
+     ((t
+       :foreground ,.violet-4)))
+   `(diff-hunk-header
+     ((t
+       :foreground ,.yellow-6)))
+   `(diff-indicator-added
+     ((t
+       :inherit diff-added)))
+   `(diff-indicator-changed
+     ((t
+       :inherit diff-changed)))
+   `(diff-indicator-removed
+     ((t
+       :inherit diff-removed)))
+   `(diff-refine-added
+     ((t
+       :weight bold)))
+   `(diff-refine-changed
+     ((t
+       :weight bold)))
+   `(diff-refine-removed
+     ((t
+       :inherit diff-refine-changed :weight bold)))
+   `(elisp-shorthand-font-lock-face
+     ((t
+       :inherit font-lock-keyword-face)))
+   `(error
+     ((t
+       :foreground ,.red-4 :weight bold)))
+   `(flymake-error
+     ((t
+       :underline (:color ,.red-4 :style wave :position nil))))
+   `(flymake-warning
+     ((t
+       :underline (:color ,.yellow-4 :style wave :position nil))))
+   `(flymake-note
+     ((t
+       :inherit la/accent-wavy-underline)))
+   `(flymake-note-echo
+     ((t
+       :inherit la/accent-foreground
+       :weight bold)))
+   `(flymake-note-echo-at-eol
+     ((t
+       :inherit (flymake-end-of-line-diagnostics-face flymake-note-echo))))
+   `(flymake-note-fringe
+     ((t
+       :inherit flymake-note-echo)))
+   `(match
+     ((,la/light
+       :background ,.yellow-2
+       :distant-foreground ,.shade-4)
+      (,la/dark
+       :background "#897827"
+       :distant-foreground ,.dark-5)))
+   `(speedbar-file-face
+     ((t
+       :inherit default)))
 
+   `(speedbar-directory-face
+     ((t
+       :inherit (speedbar-file-face la/accent-foreground)
+       :weight bold)))
+   `(speedbar-selected-face
+     ((t
+       :inherit highlight))) ;; TODO
 
-   ;;Header line and mode line
-   `(mode-line
-     ((,abcz-light (:box (:line-width (4 . 4) :style flat-button) :inherit variable-pitch :background ,.light-4))
-      (,abcz-dark (:box (:line-width (4 . 4) :style flat-button) :inherit variable-pitch :background ,.dark-4))))
-   `(mode-line-active
-     ((t (:inherit mode-line))))
-   `(mode-line-buffer-id
-     ((t (:weight bold))))
-   `(mode-line-emphasis
-     ((t (:weight bold))))
-   `(mode-line-highlight
-     ((t (:foreground ,.light-8))))
-   `(mode-line-inactive
-     ((,abcz-light (:inherit mode-line :background ,.light-2 :foreground ,.light-8))
-      (,abcz-dark (:inherit mode-line :background ,.dark-2 :foreground ,.dark-1))))
-   `(header-line
-     ((t (:inherit mode-line))))
-   `(header-line-active
-     ((t (:inherit header-line))))
-   `(header-line-highlight
-     ((t :inherit mode-line-highlight)))
-   `(header-line-inactive
-     ((t (:inherit mode-line-inactive))))
-
-
-
-   
+   `(speedbar-button-face
+     ((t
+       :foreground ,.gray-3))) ;; TODO
+   ;;ANSI
+   `(ansi-color-black
+     ((t
+       :background ,.ansi-black
+       :foreground ,.ansi-black)))
+   `(ansi-color-blue
+     ((t
+       :background ,.ansi-blue
+       :foreground ,.ansi-blue)))
+   `(ansi-color-bright-black
+     ((t
+       :background ,.ansi-bright-black
+       :foreground ,.ansi-bright-black)))
+   `(ansi-color-bright-blue
+     ((t
+       :background ,.ansi-bright-blue
+       :foreground ,.ansi-bright-blue)))
+   `(ansi-color-bright-cyan
+     ((t
+       :background ,.ansi-bright-cyan
+       :foreground ,.ansi-bright-cyan)))
+   `(ansi-color-bright-green
+     ((t
+       :background ,.ansi-bright-green
+       :foreground ,.ansi-bright-green)))
+   `(ansi-color-bright-magenta
+     ((t
+       :background ,.ansi-bright-magenta
+       :foreground ,.ansi-bright-magenta)))
+   `(ansi-color-bright-red
+     ((t
+       :background ,.ansi-bright-red
+       :foreground ,.ansi-bright-red)))
+   `(ansi-color-bright-yellow
+     ((t
+       :background ,.ansi-bright-yellow
+       :foreground ,.ansi-bright-yellow)))
+   `(ansi-color-cyan
+     ((t
+       :background ,.ansi-cyan
+       :foreground ,.ansi-cyan)))
+   `(ansi-color-green
+     ((t
+       :background ,.ansi-green
+       :foreground ,.ansi-green)))
+   `(ansi-color-magenta
+     ((t :background ,.ansi-magenta
+         :foreground ,.ansi-magenta)))
+   `(ansi-color-red
+     ((t :background ,.ansi-red
+         :foreground ,.ansi-red)))
+   `(ansi-color-white
+     ((t :background ,.ansi-white
+         :foreground ,.ansi-white)))
+   `(ansi-color-yellow
+     ((t :background ,.ansi-yellow
+         :foreground ,.ansi-yellow)))
    `(orderless-match-face-0
-     ((t (:foreground "#8939A4"))))
+     ((t
+       :foreground "#8939A4")))
    `(orderless-match-face-1
-     ((t (:inherit orderless-match-face-0))))
+     ((t
+       :inherit orderless-match-face-0)))
    `(orderless-match-face-2
-     ((t (:inherit orderless-match-face-0))))
+     ((t
+       :inherit orderless-match-face-0)))
    `(orderless-match-face-3
-     ((t (:inherit orderless-match-face-2))))
+     ((t
+       :inherit orderless-match-face-2)))
    `(org-mode-line-clock-overrun
-     ((t (:inherit error))))
+     ((t
+       :inherit error)))
    `(region
-     ((t (:extend t :background "#DEC6E6"))))
+     ((t
+       :inherit la/accent-background
+       :extend t)))
    `(show-parent-match
-     ((t (:weight bold))))
-   `(tab-line-tab
-     ((t)))
-   `(tab-line-tab-active
-     ((t)))
-   `(tab-line-tab-inactive
-     ((t)))
+     ((t
+       :weight bold)))
+   `(breadcrumb-imenu-leaf-face
+     ((t
+       :inherit la/accent-foreground
+       :weight bold)))
    `(trailing-whitespace
-     ((t (:foreground ,.light-7))))
+     ((t
+       :foreground ,.light-7)))
    `(vertical-border
-     ((,abcz-light :background ,.light-1 :foreground ,.light-1)
-      (,abcz-dark :background "#000000" :foreground "#000000")))
+     ((,la/light
+       :background ,.light-1
+       :foreground ,.light-1)
+      (,la/dark
+       :background "#000000"
+       :foreground "#000000")))
    `(elisp-symbol-at-mouse
-     ((t :background unspecified)))
+     ((t
+       :background unspecified)))
    `(markdown-header-face
-     ((t (:foreground ,.teal-5 :weight bold))))
+     ((t
+       :foreground ,.teal-5
+       :weight bold)))
    `(markdown-list-face
-     ((,abcz-light (:foreground ,.orange-5 :weight bold))
-      (,abcz-dark (:foreground ,.orange-4 :weight bold))))
+     ((,la/light
+       :foreground ,.orange-5
+       :weight bold)
+      (,la/dark
+       :foreground ,.orange-4
+       :weight bold)))
    `(diff-hl-change
-     ((t (:inherit diff-changed))))
+     ((t
+       :inherit diff-changed)))
    `(diff-hl-delete
-     ((t :inherit diff-removed)))
+     ((t
+       :inherit diff-removed)))
    `(diff-hl-insert
-     ((t :inherit diff-added)))))
+     ((t
+       :inherit diff-added)))))
 
 ;;;###autoload
 (when load-file-name
