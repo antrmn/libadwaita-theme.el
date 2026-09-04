@@ -108,6 +108,32 @@
 
 (defconst libadwaita-colors
   '(
+    (window-bg-light . "#fafafb")
+    (window-bg-dark . "#222226")
+    (window-fg-light . "#333338")
+    (window-fg-dark . "#ffffff")
+    (view-bg-light . "#ffffff")
+    (view-bg-dark . "#1d1d20") ;; Same as libadwaita-dark from [libadwaita-dark.xml]
+    (view-fg-light . "#333338")
+    (view-fg-dark . "#ffffff")
+    (sidebar-bg-light . "#ebebed")
+    (sidebar-bg-dark . "#2e2e32")
+    (sidebar-fg-light . "#333338")
+    (sidebar-fg-dark . "#ffffff")
+    (sidebar-backdrop-light . "#f2f2f4")
+    (sidebar-backdrop-dark . "#28282c")
+    (secondary-sidebar-bg-light . "#f3f3f5")
+    (secondary-sidebar-bg-dark . "#28282c")
+    (secondary-sidebar-fg-light . "#333338")
+    (secondary-sidebar-fg-dark . "#ffffff")
+    (secondary-sidebar-backdrop-light . "#f6f6fa")
+    (secondary-sidebar-backdrop-dark . "#252529")
+    (headerbar-bg-light . "#ffffff")
+    (headerbar-bg-dark . "#2e2e32")
+    (headerbar-fg-light . "#333338")  
+    (headerbar-fg-dark . "#ffffff")
+    (headerbar-backdrop-light . "#fafafb") ; same as window-bg
+    (headerbar-backdrop-dark . "#222226")  ; same as window-bg
     (blue-1 . "#99C1F1")
     (blue-2 . "#62A0EA")
     (blue-3 . "#3584E4")
